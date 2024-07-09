@@ -11,6 +11,7 @@ describe('NewTodo component', () => {
         inputValue: '',
         setInputValue: jest.fn(),
         error: false,
+        maxLengthList: false,
     };
 
     test('renders without crashing', () => {
