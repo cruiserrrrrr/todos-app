@@ -28,6 +28,7 @@ const TodosWrapper: FC = () => {
         newErrors.newTodoValue = true;
         setErrors({ ...errors, ...newErrors });
       }
+      
       if (newTodoValue.length >= 16) {
         newErrors.newTodoValue = true;
         setErrors({ ...errors, ...newErrors });
