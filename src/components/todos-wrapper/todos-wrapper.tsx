@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import styles from "./todos-wrapper.module.scss";
 import Todo from '../todo/todo';
 import { useDispatch, useSelector } from 'react-redux';
@@ -36,7 +36,9 @@ const TodosWrapper: FC = () => {
       setIsAdded(false);
     }
   }
-
+  useEffect(() => {
+    setTodosList(allTodosList)
+  },[allTodosList])
   return (
     <div className={styles.wrap}>
       <div className={styles.header}>
