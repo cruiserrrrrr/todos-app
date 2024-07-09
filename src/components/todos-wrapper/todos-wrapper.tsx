@@ -24,6 +24,10 @@ const TodosWrapper: FC = () => {
     } else {
       if (!newTodoValue) return
       // add
+      if (allTodosList.length > 4) {
+        newErrors.newTodoValue = true;
+        setErrors({ ...errors, ...newErrors });
+      }
       if (newTodoValue.length >= 16) {
         newErrors.newTodoValue = true;
         setErrors({ ...errors, ...newErrors });
@@ -38,7 +42,8 @@ const TodosWrapper: FC = () => {
   }
   useEffect(() => {
     setTodosList(allTodosList)
-  },[allTodosList])
+  }, [allTodosList])
+
   return (
     <div className={styles.wrap}>
       <div className={styles.header}>
