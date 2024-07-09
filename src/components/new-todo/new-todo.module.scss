@@ -1,0 +1,40 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+
+  .input,
+  .input_disable {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px;
+    border: 1px solid transparent;
+    border-radius: var(--br-small);
+    font-weight: 400;
+    color: var(--dark-color);
+    background-color: var(--light-color);
+    transition: .25s ease-in-out;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .input_disable {
+    max-width: 0;
+    overflow: hidden;
+    padding: 0;
+  }
+
+  .error_text {
+    color: var(--danger-color);
+    font-size: 12px;
+    line-height: 16px;
+    transition: .25s ease-in-out;
+  }
+
+  .error {
+    border: 1px solid var(--danger-color);
+  }
+}

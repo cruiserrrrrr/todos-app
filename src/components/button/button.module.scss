@@ -1,0 +1,25 @@
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 12px;
+  background: var(--grey-color);
+  border: none;
+  border-radius: var(--br-small);
+  font-weight: 800;
+  color: var(--dark-color);
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+
+  &:hover {
+    background: var(--dark-color);
+    color: var(--light-color);
+  }
+
+  &:active {
+    background: var(--dark-color);
+    color: var(--success-color);
+    transform: scale(.98);
+  }
+}

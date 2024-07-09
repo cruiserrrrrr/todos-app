@@ -1,0 +1,71 @@
+.todo {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  padding: 12px;
+  border-radius: var(--br-small);
+  color: var(--dark-color);
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+  font-weight: 400;
+
+  .text {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--dark-color);
+    border-bottom: 1px solid transparent;
+  }
+
+  .error_text {
+    position: absolute;
+    top: -12px;
+    left: 12px;
+    color: var(--danger-color);
+    font-weight: 600;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  .input {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid var(--dark-color);
+    outline: none;
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    margin-left: auto;
+
+    .button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px;
+      background-color: transparent;
+      width: 40px;
+      height: auto;
+      aspect-ratio: 1/1;
+      transition: .25s;
+      border: none;
+      overflow: hidden;
+      cursor: pointer;
+      border-radius: var(--br-small);
+
+      .icon {
+        width: 24px;
+        height: auto;
+      }
+    }
+  }
+}
