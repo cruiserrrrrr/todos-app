@@ -27,7 +27,7 @@ export interface ITodo {
 }
 
 export interface IErrors {
-  [key: string]: string | boolean
+  [key: string]: boolean
 }
 
 export interface INewTodo {
@@ -35,5 +35,6 @@ export interface INewTodo {
   handleAddTodo: () => void;
   inputValue: string;
   setInputValue: (value: string) => void;
-  error: boolean | string
+  error: boolean | string;
+  maxLengthList: boolean;
 }

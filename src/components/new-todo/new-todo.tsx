@@ -10,10 +10,12 @@ const NewTodo: FC<INewTodo> = (props) => {
     handleAddTodo,
     inputValue,
     setInputValue,
-    error
+    error,
+    maxLengthList
   } = props
   return (
     <div className={styles.wrap}>
+      {maxLengthList && <p className={styles.error_text}>Лимит 4 задачи</p>}
       {!!error && <p className={styles.error_text}>хочешь больше? плати</p>}
       {!!error && <p className={styles.error_text}>Лимит 16 символов, сейчас {inputValue.length}</p>}
       <input

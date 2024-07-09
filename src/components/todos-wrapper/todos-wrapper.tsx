@@ -25,10 +25,10 @@ const TodosWrapper: FC = () => {
       if (!newTodoValue) return
       // add
       if (allTodosList.length > 4) {
-        newErrors.newTodoValue = true;
+        newErrors.maxLengthList = true;
         setErrors({ ...errors, ...newErrors });
       }
-      
+
       if (newTodoValue.length >= 16) {
         newErrors.newTodoValue = true;
         setErrors({ ...errors, ...newErrors });
@@ -83,6 +83,7 @@ const TodosWrapper: FC = () => {
       )}
       <NewTodo
         error={errors.newTodoValue}
+        maxLengthList={errors.maxLengthList}
         handleAddTodo={handleAddTodo}
         isAdded={isAdded}
         inputValue={newTodoValue}
