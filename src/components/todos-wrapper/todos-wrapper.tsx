@@ -1,6 +1,5 @@
 import { FC, useState } from 'react';
 import styles from "./todos-wrapper.module.scss";
-import Button from '../button/button';
 import Todo from '../todo/todo';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTodo, allTodos, completedTodos, uncompletedTodos } from '../../services/redux/slices/todoSlice';

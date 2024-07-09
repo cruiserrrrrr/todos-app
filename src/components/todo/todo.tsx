@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useRef, useState } from "react";
 import { IErrors, ITodo } from "../../services/types/global";
 import styles from "./todo.module.scss";
 import Checkbox from "../checkbox/checkbox";
@@ -32,7 +32,6 @@ const Todo: FC<ITodo> = (props) => {
   }
 
   const handleStartEditSession = () => {
-    const newErrors: IErrors = {}
     if (!isNewValue) {
       setIsNewValue(true);
       inputRef.current?.focus();

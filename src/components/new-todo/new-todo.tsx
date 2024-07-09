@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { INewTodo, ITodo } from "../../services/types/global";
+import { INewTodo } from "../../services/types/global";
 import styles from "./new-todo.module.scss";
 import Button from "../button/button";
 

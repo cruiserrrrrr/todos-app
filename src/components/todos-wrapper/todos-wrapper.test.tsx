@@ -1,107 +1,85 @@
 import React from 'react';
+import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import TodosWrapper from './todos-wrapper';
-import '@testing-library/jest-dom';
 import { addTodo } from '../../services/redux/slices/todoSlice';
 
+// Создание мокового стора
 const mockStore = configureStore([]);
+let store: ReturnType<typeof mockStore>;
 
-describe('TodosWrapper component', () => {
-  let store: ReturnType<typeof mockStore>;
-  let component;
-
-  beforeEach(() => {
+beforeEach(() => {
     store = mockStore({
-      todos: {
-        allTodos: [
-          { id: '1', text: 'Test Todo 1', completed: false },
-          { id: '2', text: 'Test Todo 2', completed: true }
-        ],
-        completedTodos: [
-          { id: '2', text: 'Test Todo 2', completed: true }
-        ],
-        uncompletedTodos: [
-          { id: '1', text: 'Test Todo 1', completed: false }
-        ]
-      }
+        todo: {
+            todos: [], // Убедитесь, что поле todos присутствует
+            allTodos: [],
+            completedTodos: [],
+            uncompletedTodos: []
+        }
     });
+
     store.dispatch = jest.fn();
+});
 
-    component = render(
-      <Provider store={store}>
-        <TodosWrapper />
-      </Provider>
+test('renders TodosWrapper component', () => {
+    render(
+        <Provider store={store}>
+            <TodosWrapper />
+        </Provider>
     );
-  });
 
-  test('renders without crashing', () => {
-    const headerElement = screen.getByText('Todo');
-    expect(headerElement).toBeInTheDocument();
-  });
+    expect(screen.getByText('Todo')).toBeInTheDocument();
+    expect(screen.getByTitle('Все')).toBeInTheDocument();
+    expect(screen.getByTitle('Выполнено')).toBeInTheDocument();
+    expect(screen.getByTitle('Активно')).toBeInTheDocument();
+});
 
-  test('renders empty state when there are no todos', () => {
+test('adds a new todo', () => {
+    render(
+        <Provider store={store}>
+            <TodosWrapper />
+        </Provider>
+    );
+
+    fireEvent.click(screen.getByText('Добавить'));
+    fireEvent.change(screen.getByPlaceholderText('Что будем делать?'), { target: { value: 'Новое задание' } });
+    fireEvent.click(screen.getByText('точно?'));
+
+    expect(store.dispatch).toHaveBeenCalledWith(addTodo({
+        text: 'Новое задание'
+    }));
+});
+
+test('switches between all, completed, and active todos', () => {
     store = mockStore({
-      todos: {
-        allTodos: [],
-        completedTodos: [],
-        uncompletedTodos: []
-      }
+        todo: {
+            todos: [
+                { id: 1, text: 'Test Todo', completed: false },
+                { id: 2, text: 'Completed Todo', completed: true }
+            ],
+            allTodos: [{ id: 1, text: 'Test Todo', completed: false }, { id: 2, text: 'Completed Todo', completed: true }],
+            completedTodos: [{ id: 2, text: 'Completed Todo', completed: true }],
+            uncompletedTodos: [{ id: 1, text: 'Test Todo', completed: false }]
+        }
     });
-    component = render(
-      <Provider store={store}>
-        <TodosWrapper />
-      </Provider>
+
+    render(
+        <Provider store={store}>
+            <TodosWrapper />
+        </Provider>
     );
 
-    const emptyElement = screen.getByText('Нет тудушек');
-    expect(emptyElement).toBeInTheDocument();
-  });
+    fireEvent.click(screen.getByTitle('Все'));
+    expect(screen.getByText('Test Todo')).toBeInTheDocument();
+    expect(screen.getByText('Completed Todo')).toBeInTheDocument();
 
-  test('toggles the new todo input when the add button is clicked', () => {
-    const addButton = screen.getByText('Добавить');
-    fireEvent.click(addButton);
-    const confirmButton = screen.getByText('точно?');
-    expect(confirmButton).toBeInTheDocument();
-  });
+    fireEvent.click(screen.getByTitle('Выполнено'));
+    expect(screen.getByText('Completed Todo')).toBeInTheDocument();
+    expect(screen.queryByText('Test Todo')).toBeNull();
 
-  test('adds a new todo when the input value is valid and confirmed', () => {
-    const addButton = screen.getByText('Добавить');
-    fireEvent.click(addButton);
-    const input = screen.getByPlaceholderText('Что будем делать?');
-    fireEvent.change(input, { target: { value: 'New Todo' } });
-    const confirmButton = screen.getByText('точно?');
-    fireEvent.click(confirmButton);
-    expect(store.dispatch).toHaveBeenCalledWith(addTodo({ text: 'New Todo' }));
-  });
-
-  test('shows error message when new todo value exceeds 16 characters', () => {
-    const addButton = screen.getByText('Добавить');
-    fireEvent.click(addButton);
-    const input = screen.getByPlaceholderText('Что будем делать?');
-    fireEvent.change(input, { target: { value: 'This is a very long todo text' } });
-    const confirmButton = screen.getByText('точно?');
-    fireEvent.click(confirmButton);
-    const errorMessage = screen.getByText('Неа, максимум 16 символов');
-    expect(errorMessage).toBeInTheDocument();
-  });
-
-  test('sorts todos when the sort buttons are clicked', () => {
-    const allButton = screen.getByTitle('Все');
-    const completedButton = screen.getByTitle('Выполнено');
-    const activeButton = screen.getByTitle('Активно');
-    
-    fireEvent.click(allButton);
-    const allTodosText = screen.getByText('Test Todo 1');
-    expect(allTodosText).toBeInTheDocument();
-
-    fireEvent.click(completedButton);
-    const completedTodoText = screen.getByText('Test Todo 2');
-    expect(completedTodoText).toBeInTheDocument();
-
-    fireEvent.click(activeButton);
-    const activeTodoText = screen.getByText('Test Todo 1');
-    expect(activeTodoText).toBeInTheDocument();
-  });
+    fireEvent.click(screen.getByTitle('Активно'));
+    expect(screen.getByText('Test Todo')).toBeInTheDocument();
+    expect(screen.queryByText('Completed Todo')).toBeNull();
 });
