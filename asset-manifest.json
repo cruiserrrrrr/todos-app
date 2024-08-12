@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/tz-mb/static/css/main.33553f47.css",
-    "main.js": "/tz-mb/static/js/main.823c80d8.js",
-    "static/js/453.d8e68de1.chunk.js": "/tz-mb/static/js/453.d8e68de1.chunk.js",
-    "index.html": "/tz-mb/index.html",
-    "main.33553f47.css.map": "/tz-mb/static/css/main.33553f47.css.map",
-    "main.823c80d8.js.map": "/tz-mb/static/js/main.823c80d8.js.map",
-    "453.d8e68de1.chunk.js.map": "/tz-mb/static/js/453.d8e68de1.chunk.js.map"
+    "main.css": "/todos-app/static/css/main.4e216b51.css",
+    "main.js": "/todos-app/static/js/main.4161e694.js",
+    "static/js/453.d8e68de1.chunk.js": "/todos-app/static/js/453.d8e68de1.chunk.js",
+    "index.html": "/todos-app/index.html",
+    "main.4e216b51.css.map": "/todos-app/static/css/main.4e216b51.css.map",
+    "main.4161e694.js.map": "/todos-app/static/js/main.4161e694.js.map",
+    "453.d8e68de1.chunk.js.map": "/todos-app/static/js/453.d8e68de1.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.33553f47.css",
-    "static/js/main.823c80d8.js"
+    "static/css/main.4e216b51.css",
+    "static/js/main.4161e694.js"
   ]
 }
