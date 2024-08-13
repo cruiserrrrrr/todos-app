@@ -15,6 +15,7 @@ const TodosWrapper: FC = () => {
   const [newTodoValue, setNewTodoValue] = useState<string>('');
   const [errors, setErrors] = useState<IErrors>({});
   const [todosList, setTodosList] = useState<ITodo[]>(allTodosList);
+  const [choicesListName, setChoicesListName] = useState<string>('All');
   const dispatch = useDispatch();
 
   const handleAddTodo = () => {
@@ -22,7 +23,10 @@ const TodosWrapper: FC = () => {
     if (!isAdded) {
       setIsAdded(true);
     } else {
-      if (!newTodoValue) return
+      if (!newTodoValue) {
+        setIsAdded(false);
+        return
+      }
       // add
       if (allTodosList.length > 4) {
         newErrors.maxLengthList = true;
@@ -39,12 +43,38 @@ const TodosWrapper: FC = () => {
       dispatch(addTodo({ text: newTodoValue }));
       setNewTodoValue('');
       setIsAdded(false);
-    }
-  }
+    };
+  };
+
   useEffect(() => {
-    setTodosList(allTodosList)
+    if(!completedTodosList.length) {
+      setTodosList(allTodosList);
+      return;
+    }
+    if(!uncompletedTodosList.length){
+      setTodosList(allTodosList);
+      return;
+    }
+    switch (choicesListName) {
+      case 'All':
+        setTodosList(allTodosList);
+        break;
+      case 'Completed':
+        setTodosList(completedTodosList);
+        break;
+      case 'Active':
+        setTodosList(uncompletedTodosList);
+        break;
+      default:
+        break;
+    }
   }, [allTodosList])
 
+  const handleChoice = (list: ITodo[], name: string) => {
+    setTodosList(list);
+    setChoicesListName(name);
+  };
+  
   return (
     <div className={styles.wrap}>
       <div className={styles.header}>
@@ -53,17 +83,17 @@ const TodosWrapper: FC = () => {
           <button
             className={`${styles.sort_button} ${styles.all}`}
             title='Все'
-            onClick={() => setTodosList(allTodosList)}
+            onClick={() => handleChoice(allTodosList, 'All')}
           />
           <button
             className={`${styles.sort_button} ${styles.completed}`}
             title='Выполнено'
-            onClick={() => setTodosList(completedTodosList)}
+            onClick={() => handleChoice(completedTodosList, 'Completed')}
           />
           <button
             className={`${styles.sort_button} ${styles.active}`}
             title='Активно'
-            onClick={() => setTodosList(uncompletedTodosList)}
+            onClick={() => handleChoice(uncompletedTodosList, 'Active')}
           />
         </div>
       </div>

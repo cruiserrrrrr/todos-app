@@ -21,10 +21,15 @@
     }
   }
 
+  .input {
+    opacity: 1;
+  }
+
   .input_disable {
     max-width: 0;
     overflow: hidden;
     padding: 0;
+    opacity: 0;
   }
 
   .error_text {
